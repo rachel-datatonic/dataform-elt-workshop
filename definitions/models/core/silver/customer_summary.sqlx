@@ -1,0 +1,59 @@
+config { 
+  schema: "silver",
+  type: "table",
+  tags: ["silver"],
+  bigquery: {
+    labels: { layer: "silver" }
+  },
+}
+
+/*
+TUTORIAL: Customer Summary with Complex Data Type Handling & Dynamic Aggregation
+===============================================================================
+Step 2: Summarize customer data, flatten nested arrays, and use JS for dynamic metrics.
+Demonstrates:
+- Complex Data Type Handling (flattening arrays/structs, grouping, aggregating)
+- Dynamic SQL Generation (inject custom aggregations)
+*/
+
+
+
+WITH flattened_orders AS (
+  SELECT
+    customer_id,
+    customer_name,
+    DATE(order_struct.order_date) AS order_date,
+    order_struct.order_amount AS order_amount,
+    order_struct.categories AS categories
+  FROM
+    ${ref("dl_example_generated_dataform")},
+    UNNEST(orders) AS order_struct
+),
+orders_with_counts AS (
+  SELECT
+    customer_id,
+    customer_name,
+    order_date,
+    order_amount,
+    categories,
+    1 AS order_count
+  FROM
+    flattened_orders
+)
+
+SELECT
+  customer_id,
+  ANY_VALUE(customer_name) AS customer_name,
+  COUNT(*) AS order_count,
+  SUM(order_amount) AS lifetime_spend,
+  ARRAY_AGG(STRUCT(order_date, order_amount, categories) ORDER BY order_date DESC) AS order_history,
+  ARRAY_AGG(DISTINCT category) AS all_categories,
+  MAX(order_date) AS last_order_date,
+  DATE_DIFF(CURRENT_DATE(), MAX(order_date), DAY) AS days_since_last_order,
+  -- Dynamic aggregations (sum/avg/max/median) from agg_config.js
+  ${agg_config.build_agg_selects()}
+FROM
+  orders_with_counts,
+  UNNEST(categories) AS category
+GROUP BY
+  customer_id

@@ -1,0 +1,30 @@
+config { 
+  schema: "gold",
+  type: "table",
+  tags: ["gold"],
+  bigquery: {
+    labels: { layer: "gold" }
+  },
+}
+
+/*
+TUTORIAL: Dynamic Customer Segmentation
+======================================
+Step 3: Segment customers using JS-driven CASE and inject custom scoring logic.
+Demonstrates:
+- Dynamic SQL Generation (CASE statement from JS config)
+- Custom Functions/Libraries (inject JS-generated scoring SQL)
+*/
+
+
+SELECT
+  customer_id,
+  customer_name,
+  order_count,
+  lifetime_spend,
+  last_order_date,
+  days_since_last_order,
+  ${segment_config.build_segment_case_statement()} AS customer_segment,
+  ${customer_score.customer_score_expr()} AS customer_score
+FROM
+  ${ref("customer_summary")}
