@@ -1,6 +1,0 @@
-config {
-    type: "declaration",
-    database: "datatonic-analytics-sandbox",
-    schema: "dl_example_for_dataform",
-    name: "dl_example_generated_dataform"
-}

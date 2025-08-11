@@ -10,7 +10,7 @@ config {
 /*
 TUTORIAL: Dynamic Customer Segmentation
 ======================================
-Step 3: Segment customers using JS-driven CASE and inject custom scoring logic.
+Segment customers using JS-driven CASE and inject custom scoring logic.
 Demonstrates:
 - Dynamic SQL Generation (CASE statement from JS config)
 - Custom Functions/Libraries (inject JS-generated scoring SQL)

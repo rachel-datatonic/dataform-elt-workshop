@@ -10,12 +10,11 @@ config {
 /*
 TUTORIAL: Customer Summary with Complex Data Type Handling & Dynamic Aggregation
 ===============================================================================
-Step 2: Summarize customer data, flatten nested arrays, and use JS for dynamic metrics.
+Summarise customer data, flatten nested arrays, and use JS for dynamic metrics.
 Demonstrates:
 - Complex Data Type Handling (flattening arrays/structs, grouping, aggregating)
 - Dynamic SQL Generation (inject custom aggregations)
 */
-
 
 
 WITH flattened_orders AS (

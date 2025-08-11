@@ -3,15 +3,15 @@ config {
     tags: ["template_prerequisites"]
 }
 
-CREATE SCHEMA IF NOT EXISTS `datatonic-analytics-sandbox`.dl_example_for_dataform;
+CREATE SCHEMA IF NOT EXISTS `datatonic-analytics-sandbox`.dataform_workshop_demo;
 
-CREATE OR REPLACE TABLE `datatonic-analytics-sandbox.dl_example_for_dataform.dl_example_generated_dataform`
+
+CREATE OR REPLACE TABLE `datatonic-analytics-sandbox.dataform_workshop_demo.dl_example_generated_dataform`
 PARTITION BY TIMESTAMP_TRUNC(source_partition_timestamp, DAY)
 AS
 SELECT
   1 AS customer_id,
   'Alice' AS customer_name,
-  '2021-01-01' AS first_order_date,
   TIMESTAMP('2023-07-01') AS source_partition_timestamp,
   [
     STRUCT('2024-06-01' AS order_date, 700 AS order_amount, ['socks', 'shoes'] AS categories),
@@ -20,20 +20,20 @@ SELECT
   ] AS orders
 UNION ALL
 SELECT
-  2, 'Bob', '2021-05-17', TIMESTAMP('2023-07-01'),
+  2, 'Bob', TIMESTAMP('2023-07-01'),
   [
     STRUCT('2023-12-11', 1500, ['shoes']),
     STRUCT('2024-01-14', 400, ['shirt', 'jacket'])
   ]
 UNION ALL
 SELECT
-  3, 'Carol', '2023-03-22', TIMESTAMP('2023-07-01'),
+  3, 'Carol', TIMESTAMP('2023-07-01'),
   [
     STRUCT('2023-03-22', 100, ['shirt'])
   ]
 UNION ALL
 SELECT
-  4, 'Dan', '2020-09-10', TIMESTAMP('2023-07-01'),
+  4, 'Dan', TIMESTAMP('2023-07-01'),
   [
     STRUCT('2022-01-01', 400, ['shoes']),
     STRUCT('2022-03-15', 500, ['pants']),
@@ -42,7 +42,7 @@ SELECT
   ]
 UNION ALL
 SELECT
-  5, 'Eve', '2019-11-03', TIMESTAMP('2023-07-01'),
+  5, 'Eve', TIMESTAMP('2023-07-01'),
   [
     STRUCT('2022-07-15', 700, ['jacket']),
     STRUCT('2022-12-01', 200, ['pants']),
