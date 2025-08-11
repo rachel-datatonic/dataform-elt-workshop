@@ -1,0 +1,23 @@
+config {
+  type: 'table',
+  dependencies: ['evaluate_model'],
+  schema: 'df_bqml_chicago_taxi_trips',
+  tags: ['prediction']
+}
+
+SELECT
+  dayofweek,
+  hourofday,
+  trip_distance,
+  trip_miles,
+  trip_seconds,
+  payment_type,
+  company,
+  ROUND(predicted_label, 2) AS predicted_fare
+FROM
+  ML.PREDICT(
+    MODEL ${ref('dnn_model_train')},
+    (
+      SELECT * FROM ${ref('chicago_taxi_trips_testing')}
+    )
+  )

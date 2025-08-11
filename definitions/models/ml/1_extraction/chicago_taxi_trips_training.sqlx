@@ -1,0 +1,56 @@
+config {
+    type: "table",
+    schema: "df_bqml_chicago_taxi_trips",
+    tags: ['training']
+}
+
+js {
+    const fields_not_null = [
+        'trip_miles',
+        'trip_seconds',
+        'fare',
+        'trip_start_timestamp',
+        'pickup_longitude',
+        'pickup_latitude',
+        'dropoff_longitude',
+        'dropoff_latitude',
+        'payment_type',
+        'company'
+    ]
+}
+-- Get the youngest date from the table
+WITH max_date AS (
+    SELECT DATE(MAX(trip_start_timestamp)) AS latest_date
+    FROM ${ref('taxi_trips')}
+),
+-- Extract the training dataset.
+data_btw_last3_to_last2_month AS (
+    SELECT *
+    FROM ${ref('taxi_trips')}, max_date
+    WHERE
+        DATE(trip_start_timestamp) BETWEEN
+            DATE_SUB(latest_date, INTERVAL 5 MONTH) AND
+            DATE_SUB(latest_date, INTERVAL 2 MONTH)
+),
+-- Apply some transormation and filtering
+final_table_ext AS (
+    SELECT
+        CAST(EXTRACT(DAYOFWEEK FROM trip_start_timestamp) AS INT) AS dayofweek,
+        CAST(EXTRACT(HOUR FROM trip_start_timestamp) AS INT) AS hourofday,
+        ST_DISTANCE(
+            ST_GEOGPOINT(pickup_longitude, pickup_latitude),
+            ST_GEOGPOINT(dropoff_longitude, dropoff_latitude)) AS trip_distance,
+        trip_miles,
+        trip_seconds,
+        payment_type,
+        company,
+        (fare + tips + tolls + extras) AS label
+    FROM data_btw_last3_to_last2_month
+    WHERE
+        trip_miles > 0
+        AND trip_seconds > 0
+        AND fare BETWEEN 0 AND 1500
+        AND ${fields_not_null.map(field => `${field} IS NOT NULL`).join(' AND ')}
+)
+
+SELECt * FROM final_table_ext

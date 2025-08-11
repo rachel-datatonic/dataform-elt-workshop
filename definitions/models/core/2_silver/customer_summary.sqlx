@@ -8,7 +8,7 @@ config {
 }
 
 /*
-TUTORIAL: Customer Summary with Complex Data Type Handling & Dynamic Aggregation
+LAB 1: Customer Summary with Complex Data Type Handling & Dynamic Aggregation
 ===============================================================================
 Summarise customer data, flatten nested arrays, and use JS for dynamic metrics.
 Demonstrates:

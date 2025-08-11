@@ -1,0 +1,19 @@
+config {
+  type: 'operations',
+  hasOutput: true,
+  schema: 'df_bqml_chicago_taxi_trips',
+  tags: ['training']
+}
+
+CREATE OR REPLACE MODEL ${self()}  
+OPTIONS (
+  MODEL_TYPE = 'DNN_REGRESSOR',
+  ACTIVATION_FN = 'RELU',
+  HIDDEN_UNITS = [64, 64, 64, 64],
+  INPUT_LABEL_COLS = ['label']
+)
+AS
+  SELECT
+    *
+  FROM
+    ${ref('chicago_taxi_trips_training')}

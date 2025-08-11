@@ -1,0 +1,15 @@
+config {
+  type: 'assertion',
+  tags: ['prediction']
+}
+
+SELECT
+  *
+FROM
+  ML.EVALUATE(
+    MODEL ${ref('dnn_reg')}, 
+    (
+      SELECT * FROM ${ref('chicago_taxi_trips_evaluation')}
+    )
+  )
+WHERE mean_absolute_error > 5

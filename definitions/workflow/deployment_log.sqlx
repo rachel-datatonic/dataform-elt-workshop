@@ -3,6 +3,12 @@ config {
   tags: ["workflow", "monitoring"]
 }
 
+/*
+LAB 2: Monitoring Workflow Executions in BigQuery
+===============================================================================
+We'll sink Dataform's execution logs to BigQuery for analysis.
+*/
+
 SELECT
   timestamp,
   receiveTimestamp AS receive_timestamp,
@@ -20,4 +26,3 @@ FROM
    ${ref("dataform_googleapis_com_workflow_invocation_completion")}
 WHERE
   jsonpayload_v1_workflowinvocationcompletionlogentry.workflowinvocationid IS NOT NULL
-
