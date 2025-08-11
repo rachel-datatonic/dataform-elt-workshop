@@ -1,0 +1,5 @@
+node_modules/
+# local definitions is a file for development users when they are setting up their environment
+includes/local_definitions.js
+.df-credentials.json
+.package-lock.json
