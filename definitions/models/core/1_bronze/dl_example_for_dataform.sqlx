@@ -1,0 +1,6 @@
+config {
+    type: "declaration",
+    database: `${dataform.projectConfig.defaultDatabase}`,
+    schema: `${dataform.projectConfig.defaultSchema}`,
+    name: "dl_example_generated_dataform"
+}

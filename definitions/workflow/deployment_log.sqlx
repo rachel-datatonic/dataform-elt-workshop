@@ -1,0 +1,23 @@
+config {
+  type: "operations",
+  tags: ["workflow", "monitoring"]
+}
+
+SELECT
+  timestamp,
+  receiveTimestamp AS receive_timestamp,
+  severity,
+  jsonpayload_v1_workflowinvocationcompletionlogentry.terminalstate AS terminal_state,
+  CASE
+    WHEN jsonpayload_v1_workflowinvocationcompletionlogentry.terminalstate = 'FAILED'
+    THEN textPayload
+    ELSE NULL
+  END AS error_message,
+  jsonpayload_v1_workflowinvocationcompletionlogentry.workflowinvocationid AS invocation_id,
+  resource.labels.repository_id
+FROM
+  
+   ${ref("dataform_googleapis_com_workflow_invocation_completion")}
+WHERE
+  jsonpayload_v1_workflowinvocationcompletionlogentry.workflowinvocationid IS NOT NULL
+
