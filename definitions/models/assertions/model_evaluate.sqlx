@@ -7,7 +7,7 @@ SELECT
   *
 FROM
   ML.EVALUATE(
-    MODEL ${ref('dnn_reg')}, 
+    MODEL ${ref('dnn_model_train')}, 
     (
       SELECT * FROM ${ref('chicago_taxi_trips_evaluation')}
     )

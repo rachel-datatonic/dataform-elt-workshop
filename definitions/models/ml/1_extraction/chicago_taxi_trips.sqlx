@@ -4,4 +4,3 @@ config {
     schema: "chicago_taxi_trips",
     name: "taxi_trips"
 }
-

@@ -1,7 +1,6 @@
 config {
   type: 'table',
-  dependencies: ['evaluate_model'],
-  schema: 'df_bqml_chicago_taxi_trips',
+  schema: "df_bqml_chicago_taxi_trips",
   tags: ['prediction']
 }
 
