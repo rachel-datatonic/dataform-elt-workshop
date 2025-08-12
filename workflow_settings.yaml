@@ -1,5 +1,5 @@
 dataformCoreVersion: 3.0.0
 defaultProject: datatonic-analytics-sandbox
 defaultDataset: dataform_workshop_demo
-defaultLocation: europe-west2
+defaultLocation: US
 defaultAssertionDataset: dataform_workshop_demo_assertions
