@@ -103,11 +103,6 @@ GROUP BY
   customer_id
 ```
 
-Run just this table:
-```bash
-dataform run --actions customer_summary
-```
-
 ---
 
 ## Step 4: Build the Dynamic Segmentation Table (Gold)
@@ -134,10 +129,6 @@ FROM
   ${ref("customer_summary")}
 ```
 
-Run just this table:
-```bash
-dataform run --actions customer_segmentation
-```
 
 ---
 
@@ -198,4 +189,3 @@ Replace the project/dataset path with your environment or use the Dataform UI to
 - SQLX + JS pattern: keep SQL stable, move business rules to JS
 - Dynamic CASE for segmentation
 - Reusable scoring and aggregation logic
-
