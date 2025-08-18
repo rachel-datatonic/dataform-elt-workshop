@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project demonstrates how to build a machine learning (ML) pipeline using **BigQuery ML** within a **Dataform** environment. We use a public dataset of **Chicago Taxi Trips** to train, evaluate, and predict fare amounts based on features like trip duration, distance, and payment type. The ML models are trained and executed within **Google BigQuery** using SQL, and the overall workflow is managed with **Dataform** for version control and reproducibility.
+This lab demonstrates how to build a machine learning (ML) pipeline using **BigQuery ML** within a **Dataform** environment. We use a public dataset of **Chicago Taxi Trips** to train, evaluate, and predict fare amounts based on features like trip duration, distance, and payment type. The ML models are trained and executed within **Google BigQuery** using SQL, and the overall workflow is managed with **Dataform** for version control and reproducibility.
 
 ## Files and Structure
 
@@ -78,7 +78,7 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
           *
        FROM
           ML.EVALUATE(
-             MODEL ${ref('dnn_reg')}, 
+             MODEL ${ref('dnn_model_train')}, 
              (
                 SELECT * FROM ${ref('chicago_taxi_trips_evaluation')}
              )
@@ -103,7 +103,7 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
              ROUND(predicted_label, 2) AS predicted_fare
           FROM
              ML.PREDICT(
-                MODEL ${ref('dnn_reg')},
+                MODEL ${ref('dnn_model_train')},
                 (
                    SELECT * FROM ${ref('chicago_taxi_trips_testing')}
                 )
