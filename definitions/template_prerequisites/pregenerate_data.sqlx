@@ -3,10 +3,10 @@ config {
     tags: ["template_prerequisites"]
 }
 
-CREATE SCHEMA IF NOT EXISTS `datatonic-analytics-sandbox`.dataform_workshop_demo;
+CREATE SCHEMA IF NOT EXISTS `${dataform.projectConfig.defaultDatabase}`.dataform_workshop_demo;
 
 
-CREATE OR REPLACE TABLE `datatonic-analytics-sandbox.dataform_workshop_demo.dl_example_generated_dataform`
+CREATE OR REPLACE TABLE `${dataform.projectConfig.defaultDatabase}.dataform_workshop_demo.dl_example_generated_dataform`
 PARTITION BY TIMESTAMP_TRUNC(source_partition_timestamp, DAY)
 AS
 SELECT
