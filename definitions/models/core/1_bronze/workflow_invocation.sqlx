@@ -1,7 +1,7 @@
 config {
     type: "declaration",
     database: `${dataform.projectConfig.defaultDatabase}`,
-    schema: `${dataform.projectConfig.defaultSchema}`,
+    schema: `dataform_logs`,
     name: "dataform_googleapis_com_workflow_invocation_completion"
 }
 
