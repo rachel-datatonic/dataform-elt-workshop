@@ -1,6 +1,6 @@
 const aggConfig = [
-    { column: "order_amount", aggs: ["SUM", "AVG", "MAX", "MEDIAN"] },
-    { column: "order_count", aggs: ["SUM", "AVG"] }
+    { column: "order_amount", aggs: ["AVG", "MAX"] },
+    { column: "order_count", aggs: ["SUM"] }
   ];
   
   // Generates a SQL SELECT fragment for aggregation
