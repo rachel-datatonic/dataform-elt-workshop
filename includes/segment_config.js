@@ -4,7 +4,7 @@ const segments = {
     "New Customer": "order_count = 1",
     "At Risk": "days_since_last_order > 90 AND days_since_last_order < 365",
     "Churned": "days_since_last_order >= 365",
-    "VIP": "lifetime_spend > 3000 OR order_count > 20"
+    "VIP": "lifetime_spend > 2000 OR order_count > 20"
 };
 
 // Dynamic CASE builder for segmentation
